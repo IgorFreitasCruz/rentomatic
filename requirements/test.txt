@@ -1,0 +1,8 @@
+-r prod.txt
+pytest
+tox
+coverage
+pytest-cov
+pytest-flask
+pyyaml==5.3.1
+docker-compose
