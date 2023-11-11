@@ -1,3 +1,4 @@
 flask
 sqlmodel
 psycopg2
+pymongo
