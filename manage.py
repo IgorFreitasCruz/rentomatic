@@ -1,5 +1,7 @@
-import json
+#! /usr/bin/env python
+
 import os
+import json
 import subprocess
 import time
 
@@ -26,9 +28,9 @@ def docker_compose_file(config):
 
 
 def read_json_configuration(config):
-    # Read configuration form the relative JSON file
+    # Read configuration from the relative JSON file
     with open(app_config_file(config)) as f:
-        config_data = json.loads(f)
+        config_data = json.load(f)
 
     # Convert the config into a usable Python dictionary
     config_data = dict((i["name"], i["value"]) for i in config_data)
@@ -45,7 +47,7 @@ def configure_app(config):
 
 @click.group()
 def cli():
-    ...
+    pass
 
 
 def docker_compose_cmdline(commands_string=None):
@@ -67,7 +69,8 @@ def docker_compose_cmdline(commands_string=None):
 
     if commands_string:
         command_line.extend(commands_string.split(" "))
-        return command_line
+
+    return command_line
 
 
 def run_sql(statements):
@@ -107,7 +110,7 @@ def test(args):
     cmdline = docker_compose_cmdline("logs postgres")
     wait_for_logs(cmdline, "ready to accept connections")
 
-    run_sql([f"CREATE DATABSE {os.getenv('APPLICATION_DB')}"])
+    run_sql([f"CREATE DATABASE {os.getenv('APPLICATION_DB')}"])
 
     cmdline = [
         "pytest",
@@ -120,6 +123,7 @@ def test(args):
 
     cmdline = docker_compose_cmdline("down")
     subprocess.call(cmdline)
+
 
 if __name__ == "__main__":
     cli()

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    images: postgres
+    image: postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
